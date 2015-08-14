@@ -1,7 +1,7 @@
 # The `chaprange` package
 
 This small package adds (only) a single but hopefully useful feature.
-It enables the user to employ to range of a chapter along to the starting page number.
+It enables the user to employ the range of a chapter along to the starting page number.
 By default page ranges will be added to the chapter entries in the table of contents.
 But, this can be bypassed if the user wants to retrieve the page range by hand only.
 
