@@ -1,0 +1,437 @@
+% \iffalse meta-comment
+%
+% Copyright (C) 2015 by Ruben Giannotti 
+% <ruben dot giannotti at gmx dot net>
+% -------------------------------------------------------
+% 
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either
+% version 1.3c of this license or (at your option) any
+% later version. The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions
+% of LaTeX version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+% 
+% The Current Maintainer of this work is Ruben Giannotti.
+%
+% This work consists of the files
+%   chaprange.dtx 
+%   chaprange.ins
+% and the derived file chaprange.sty.
+%
+% \fi
+%
+% \iffalse
+%<*driver>
+\ProvidesFile{chaprange.dtx}
+%</driver>
+%<package>\NeedsTeXFormat{LaTeX2e}[2008/04/05]
+%<package>\ProvidesPackage{chaprange}
+%<*package>
+    [2015/08/14 v0.99a Page range of chapters in TOC (RG)]
+%</package>
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{parskip}
+\usepackage{amssymb}
+%\usepackage{provideenv}
+\usepackage{xcolor}
+\usepackage{verbatim}
+\setlength\parindent{0pt}
+\providecommand*\url{}
+\renewcommand*\url{\texttt}
+\newcommand*\email{\texttt}
+\newcommand*\pkg{\textsf}
+\newcommand*\important{$\blacktriangleright$\space Important:\space}
+\newcommand*{\placeholder}[1]{\(\langle\mathit{#1}\rangle\)}
+\makeatletter
+%\provideenvironment{optionlist}{}{}
+\newenvironment{optionlist}%renewenvironment
+  {\description\labelsep0pt}
+  {\enddescription}
+\def\option#1{%
+  \kernel@ifnextchar[{\option@{#1}}{\option@{#1}[]}
+}
+\def\option@#1[#2]{%
+  \def\process{\def\process{, }}
+  \item[#1]%
+  \if\relax\detokenize{#2}\relax
+    \null\hfill\\
+  \else
+    =\@for\@opt:=#2\do{\process\texttt{\@opt}}
+    \unskip\hspace{1em plus 1fill}%
+    \nolinebreak[3]\hspace*{\fill}\mbox{default: \texttt{\@dflt}}\\
+  \fi
+  \let\@dflt\@empty
+}
+\let\@dflt\@empty
+\def\dflt#1{#1\gdef\@dflt{#1}}
+\newcounter{ltxmpl}
+\newenvironment{ltxmpl}[1][]
+  {\stepcounter{ltxmpl} \@ltxmplhead{#1} \verbatim}
+  {\endverbatim}
+\def\@ltxmplhead{%
+  \begingroup
+  \par\vspace{.75em}\par
+  \bfseries\examplename\space\theltxmpl
+  \endgroup
+  \@ltxmplcaption
+}
+\def\@ltxmplcaption#1{%
+  \if\relax\detokenize{#1}\relax\else: #1\fi
+  \par\vspace{.125em}\par
+}
+\def\examplename{Example}
+\makeatother
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\begin{document}
+  \DocInput{chaprange.dtx}
+  \PrintChanges
+  \PrintIndex
+\end{document}
+%</driver>
+% \fi
+%
+% \CheckSum{0}
+%
+% \CharacterTable
+%  {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%   Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%   Digits        \0\1\2\3\4\5\6\7\8\9
+%   Exclamation   \!     Double quote  \"     Hash (number) \#
+%   Dollar        \$     Percent       \%     Ampersand     \&
+%   Acute accent  \'     Left paren    \(     Right paren   \)
+%   Asterisk      \*     Plus          \+     Comma         \,
+%   Minus         \-     Point         \.     Solidus       \/
+%   Colon         \:     Semicolon     \;     Less than     \<
+%   Equals        \=     Greater than  \>     Question mark \?
+%   Commercial at \@     Left bracket  \[     Backslash     \\
+%   Right bracket \]     Circumflex    \^     Underscore    \_
+%   Grave accent  \`     Left brace    \{     Vertical bar  \|
+%   Right brace   \}     Tilde         \~}
+%
+%
+% \changes{v0.99a}{2015/08/14}{Initial test version}
+%
+% \GetFileInfo{chaprange.dtx}
+%
+% \DoNotIndex{\newcommand,\newenvironment,\!,\@empty,\@gobble,\@gobbletwo}
+% \DoNotIndex{\@ifpackageloaded,\@ifpackagewith,\@ifundefined,\@namedef}
+% \DoNotIndex{\@nil,\@onlypreamble,\@tempa,\@tempb,\@tempswafalse,\def}
+% \DoNotIndex{\@tempswatrue,\^,\-,\active,\begingroup,\catcode,\@car,\@cdr}
+% \DoNotIndex{\edef,\newif,\else,\endgroup,\endinput,\expandafter,\fi,\if}
+% \DoNotIndex{\if@tempswa,\ifcase,\ifnum,\ifx,\lccode,\let,\lowercase}
+% \DoNotIndex{\MessageBreak,\next,\number,\numexpr,\or,\PackageError}
+% \DoNotIndex{\PackageWarning,\PackageWarningNoLine,\strip@prefix,\@@end}
+% \DoNotIndex{\relax,\space,\string,\DeclareOption,\ProcessOptions}
+% \DoNotIndex{\SetupKeyvalOptions,\DeclareBoolOption,\ProcessKeyvalOptions}
+% \DoNotIndex{\meaning,\ifdefined,\csname,\chardef,\endcsname,\protect,\detokenize}
+% \DoNotIndex{\input,\RequirePackage,\global,\ifcsname,\makeatother}
+% \DoNotIndex{\@makeother,\the,\toks@}
+%
+% \title{The \pkg{chaprange} package\thanks{This document
+%   corresponds to \pkg{chaprange}~\fileversion, dated \filedate.}}
+% \author{Ruben Giannotti\thanks{\email{ruben dot giannotti at gmx dot net}}}
+%
+% \maketitle
+%
+%   \begin{abstract}
+% This small package adds (only) a single but hopefully useful feature.
+% It enables the user to use to range of a chapter along to the starting page number.
+% By default page ranges will be added to the chapter entries in the table of contents.
+% But, this can be bypassed if the user wants to retrieve the page range by hand only.
+%
+% This package originated from a question in
+% |tex.stackexchange.com|.\footnote{\url{http://tex.stackexchange.com/questions/145021/}}
+%  \end{abstract}
+%
+% \section{Usage}
+%
+% Yet there aren't any known incompatibilities with other packages or loading order concerns.
+% \pkg{chaprange} relies only the \pkg{kvoptions} package, which presumably is present in every \TeX\ distribution.
+%
+% The package is invoked as usual employing the \cs{usepackage} command:
+%
+% \begin{flushleft}
+% \cs{usepackage}\oarg{options}\texttt{\{chaprange\}}
+% \end{flushleft}
+%
+% The following options are available, and set through the
+% \placeholder{key}|=|\placeholder{value} syntax.
+%
+% \begin{optionlist}
+%   \option{bypass}[true,\dflt{false}]
+%      Turns off the complete TOC patch when set to `true'.
+%      The \cs{chaprange} command (see section~\ref{sec:macros}) then is still available.
+%   \option{autotoc}[\dflt{true},false]
+%      This option takes care about enabling the TOC patch automatically.
+%      When turned off the user may control the numbering pattern
+%      of TOC entries by hand with the provided user interface macros
+%      (see section~\ref{sec:macros}).
+% \end{optionlist}
+%
+% \important{Note that a freshly created document needs to be compiled \emph{three},
+%   not the usual two times!}
+%
+% \section{Macros} \label{sec:macros}
+%
+% This package comes with four user macros which are described briefly in the following.
+%
+% \DescribeMacro{\chaprange}
+%   This is the core macro. It outputs the range of the current chapter
+%   (the formatting is `\textit{pagex--pagey}' as you may expected)
+%   and can be called by the user at any point in the manuscript.
+%   Of course, it is used by the package itself
+%   when patching the internals of \LaTeX's TOC mechanism.
+%
+% Then we have a small set of user interface macros.
+%
+% \DescribeMacro{\chaprangeon} 
+%   Toggles the TOC patch when called,
+%   so that the page range is printed in the TOC from then on.
+%   The package uses it when turning on the page range in the TOC automatically
+%   through the `autotoc' option. However, it can be invoked at will by the user.
+%
+% \DescribeMacro{\chaprangeoff}
+%   Disables the TOC patch from the point on it was issued in the manuscript.
+%   It's possible to reactivate the funcionality again using the last mentioned command,
+%   i.e. \cs{chaprangeon} (see above).
+%
+% \DescribeMacro{\breakchaprange}
+%   This command is a specialisation of the previous one,
+%   but it breaks the functionality irreversibly. (Hence it can't be used more than once.)
+%   It may be used in the rare case you have content at the end of your document
+%   that does not formally belong to the last chapter.
+%
+%   In most of the cases a simple \cs{chaprangeoff} will be sufficent
+%   if you want to terminate the patch earlier in the document.
+%
+%   \begin{ltxmpl}[Simple usecase for the \cs{chaprangeoff} command]
+%\documentclass{report}
+%\usepackage{lipsum}
+%\usepackage{chaprange}
+%
+%\begin{document}
+%\tableofcontents
+%
+%\chapter{Lorem}
+%
+%\lipsum
+%
+%\chapter{Ipsum}
+%
+%\lipsum\lipsum\lipsum
+%
+%\chaprangeoff
+%
+%\chapter{Dolor}
+%
+%\lipsum\lipsum
+%\end{document}
+%   \end{ltxmpl}
+%
+%   But, if you have material concluding your document that is formally separated
+%   from your last chapter you don't want it to be counted into the pages of 
+%   this last chapter. The next example isn't really realisitc
+%   but it showcases the situation in a hopefully more or less conceivable way.
+%
+%   \begin{ltxmpl}[Motivation for \cs{breakchaprange}]
+%\documentclass{report}
+%\usepackage{lipsum}
+%\usepackage{chaprange}
+%
+%\begin{document}
+%\tableofcontents
+%
+%\chapter{Lorem}
+%
+%\lipsum
+%
+%\chapter{Ipsum}
+%
+%\lipsum\lipsum\lipsum
+%
+%\chapter{Dolor}
+%
+%\lipsum\lipsum
+%
+%\breakchaprange
+%\clearpage
+%%stuff that doesn't belong to the last chapter
+%%but isn't formally seperated by a chapter
+%\lipsum
+%\end{document}
+%   \end{ltxmpl}
+%
+% \StopEventually{}
+%
+% \section{Implementation}
+%
+% After the usual presentation, we define a first breakout point by
+% checking that the typesetting engine is sufficiently recent
+% to include the $\varepsilon$-\TeX{} extensions.
+%    \begin{macrocode}
+\@ifundefined{eTeXversion}
+  {\PackageError{chaprange}{LaTeX engine too old, aborting}
+  {Please upgrade your TeX system}\@@end}{}
+%    \end{macrocode}
+% As customary next the required package(s) get loaded.
+%    \begin{macrocode}
+\RequirePackage{kvoptions}
+%    \end{macrocode}
+% Before setting up the options we introduce a conditional for the internal logic only
+% (namely to determine if the last chapter ends the document).
+%    \begin{macrocode}
+\newif\if@chr@chap@enddc \@chr@chap@enddctrue
+%    \end{macrocode}
+% Then we set up the option handler and declare the options.
+%    \begin{macrocode}
+\SetupKeyvalOptions{
+  family=CHR,
+  prefix=@chr@
+}
+\DeclareBoolOption[false]{bypass}
+\DeclareBoolOption[true]{autotoc}
+%    \end{macrocode}
+% After processing the options we define a second breakout point by
+% testing if the \cs{chapter} command is defined.
+% If not there is no point in using the package,
+% thus the user macros get pointed to aliases and the input is ended.
+% Else the main package code begins by implementing a package bypass
+% based on the option values.
+%    \begin{macrocode}
+\ProcessKeyvalOptions*
+
+\ifdefined\chapter\else
+  \PackageWarning{chaprange}{This package has no effect when
+    using a class without chapters}
+  \let\chaprange\thepage
+  \let\chaprangeon\relax
+  \let\chaprangeoff\relax
+  \let\breakchaprange\relax
+  \endinput
+\fi
+
+\if@chr@bypass \AtEndOfPackage{\let\chaprangeon\relax} \fi
+%    \end{macrocode}
+%
+% Yet the macro section starts.
+%
+% \begin{macro}{\chr@label}
+% First, we define an auxiliary command that generates package specific labels.
+%    \begin{macrocode}
+\newcommand{\chr@label}[2]{\expandafter\label{chr@#1@#2}}
+%    \end{macrocode}
+% \end{macro}
+% Now a series of patches to some \LaTeX\ internals follows.
+% \begin{macro}{\@chapter}
+% We start with \cs{@chapter}, which should add the starting \cs{label} for a chapter
+% calling \cs{chr@label} with \placeholder{arg1}=`b' (for ``begin").
+%    \begin{macrocode}
+\let\chr@ltx@@chapter\@chapter
+\def\@chapter[#1]#2{%
+  \chr@ltx@@chapter[#1]{#2}
+  \chr@label{b}{\thechapter}
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\chapter}
+% Then \cs{chapter} itself gets redefined to add the `e' (for ``ending'') \cs{label}.
+% Note that this has to happen after \cs{tableofcontents} got invoked
+% as the TOC uses the \cs{chapter} command to build the TOC heading.
+% Thus, we hook into \cs{tableofcontents}.
+%    \begin{macrocode}
+\let\chr@ltx@toc\tableofcontents
+\renewcommand\tableofcontents{%
+  \chr@ltx@toc
+  \if@chr@autotoc \chaprangeon \fi
+  \let\chr@ltx@chapter\chapter
+  \renewcommand\chapter{%
+    \chr@label{e}{\thechapter}
+    \chr@ltx@chapter
+  }
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\enddocument}
+% The third internal patch is the end-definition of the document environment.
+% Here we insert the ending label for the last chapter,
+% so the labeling pattern gets concluded properly.
+%    \begin{macrocode}
+\let\chr@ltx@enddocument\enddocument
+\renewcommand\enddocument{%
+  \if@chr@chap@enddc \chr@label{e}{\thechapter} \fi
+  \chr@ltx@enddocument
+}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\chr@addcontentsline}
+% The last step is to define an alternative version of \cs{addcontentsline}
+% that inserts the \cs{chaprange} (see below) if and only if
+% a chapter entry is beeing constructed.
+%    \begin{macrocode}
+\newcommand{\chr@addcontentsline}[3]{%
+  \edef\@tempa{\detokenize{chapter}}
+  \edef\@tempb{\detokenize{#2}}
+  \ifx\@tempa\@tempb
+    \let\chr@page@or@range\chaprange
+  \else
+    \let\chr@page@or@range\thepage
+  \fi
+  \addtocontents{#1}{\protect\contentsline{#2}{#3}{\chr@page@or@range}}
+}%
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\chaprange}
+% The core command is \cs{chaprange} that simply extracts the pages
+% via \cs{pageref} and formats them to \placeholder{start}|--|\placeholder{end}.
+%    \begin{macrocode}
+\newcommand*\chaprange{%
+  \expandafter\pageref{chr@b@\thechapter}--%
+   \expandafter\pageref{chr@e@\thechapter}%
+}
+%    \end{macrocode}
+% \end{macro}
+% Now we proceed to the user interface macros.
+% For that we need a copy of \cs{addcontentsline}.
+%    \begin{macrocode}
+\let\chr@ltx@addcontentsline\addcontentsline
+%    \end{macrocode}
+% \begin{macro}{\chaprangeon}
+% To toggle the functionality \cs{addcontentsline} is \cs{let}
+% to the above defined \cs{chr@addcontentsline}.
+%    \begin{macrocode}
+\newcommand*\chaprangeon{\let\addcontentsline\chr@addcontentsline}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\chaprangeoff}
+% For turning off the functionality we |\let\addcontentsline|
+% back to the stored version.
+%    \begin{macrocode}
+\newcommand*\chaprangeoff{\let\addcontentsline\chr@ltx@addcontentsline}
+%    \end{macrocode}
+% \end{macro}
+% \begin{macro}{\breakchaprange}
+% To break the mechanism before the end of the document is reached
+% we set immediately the last label and prohibit that
+% \cs{enddocument} can do this by declaring \cs{@chr@chap@enddcfalse}.
+% And of course we turn off the functionality, disarm \cs{chr@label},
+% just in case, and make \cs{breakchaprange} usable only once.
+%    \begin{macrocode}
+\newcommand*\breakchaprange{%
+  \chr@label{e}{\thechapter}
+  \chaprangeoff
+  \@chr@chap@enddcfalse
+  \let\chr@label\@gobbletwo
+  \let\breakchaprange\relax
+}
+%    \end{macrocode}
+% \end{macro}
+%
+% \Finale
+\endinput
