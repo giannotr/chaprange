@@ -1,0 +1,30 @@
+\documentclass{report}
+\usepackage{lipsum}
+\usepackage[autotoc=false]{chaprange}
+
+\begin{document}
+\tableofcontents
+
+\chapter{Lorem}
+
+\lipsum
+
+\chaprangeon
+
+\chapter{Ipsum}
+
+\lipsum
+
+\section{Sit amet}
+
+\lipsum\lipsum
+
+\chapter{Dolor}
+
+\lipsum
+
+\breakchaprange
+\clearpage
+%stuff that doesn't belong to the last chapter but isn't formally seperated by a chapter
+\lipsum
+\end{document}
