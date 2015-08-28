@@ -1,0 +1,108 @@
+%%
+%% This is file `chaprange.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% chaprange.dtx  (with options: `package')
+%% 
+%% This is a generated file.
+%% 
+%% Copyright (C) 2015 by Ruben Giannotti
+%% <ruben dot giannotti at gmx dot net>
+%% -------------------------------------------------------
+%% 
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either
+%% version 1.3c of this license or (at your option) any
+%% later version. The latest version of this license is in
+%%   http://www.latex-project.org/lppl.txt
+%% and version 1.3 or later is part of all distributions
+%% of LaTeX version 2005/12/01 or later.
+%% 
+%% This work has the LPPL maintenance status `maintained'.
+%% 
+%% The Current Maintainer of this work is Ruben Giannotti.
+%% 
+%% This work consists of the files
+%%   chaprange.dtx
+%%   chaprange.ins
+%% and the derived file chaprange.sty.
+%% 
+\NeedsTeXFormat{LaTeX2e}[2008/04/05]
+\ProvidesPackage{chaprange}
+    [2015/08/14 v0.99a Page range of chapters in TOC (RG)]
+%%stuff that doesn't belong to the last chapter
+%%but isn't formally seperated by a chapter
+\@ifundefined{eTeXversion}
+  {\PackageError{chaprange}{LaTeX engine too old, aborting}
+  {Please upgrade your TeX system}\@@end}{}
+\RequirePackage{kvoptions}
+\newif\if@chr@chap@enddc \@chr@chap@enddctrue
+\SetupKeyvalOptions{
+  family=CHR,
+  prefix=@chr@
+}
+\DeclareBoolOption[false]{bypass}
+\DeclareBoolOption[true]{autotoc}
+\ProcessKeyvalOptions*
+
+\ifdefined\chapter\else
+  \PackageWarning{chaprange}{This package has no effect when
+    using a class without chapters}
+  \let\chaprange\thepage
+  \let\chaprangeon\relax
+  \let\chaprangeoff\relax
+  \let\breakchaprange\relax
+  \endinput
+\fi
+
+\if@chr@bypass \AtEndOfPackage{\let\chaprangeon\relax} \fi
+\newcommand{\chr@label}[2]{\expandafter\label{chr@#1@#2}}
+\let\chr@ltx@@chapter\@chapter
+\def\@chapter[#1]#2{%
+  \chr@ltx@@chapter[#1]{#2}
+  \chr@label{b}{\thechapter}
+}
+\let\chr@ltx@toc\tableofcontents
+\renewcommand\tableofcontents{%
+  \chr@ltx@toc
+  \if@chr@autotoc \chaprangeon \fi
+  \let\chr@ltx@chapter\chapter
+  \renewcommand\chapter{%
+    \chr@label{e}{\thechapter}
+    \chr@ltx@chapter
+  }
+}
+\let\chr@ltx@enddocument\enddocument
+\renewcommand\enddocument{%
+  \if@chr@chap@enddc \chr@label{e}{\thechapter} \fi
+  \chr@ltx@enddocument
+}
+\newcommand{\chr@addcontentsline}[3]{%
+  \edef\@tempa{\detokenize{chapter}}
+  \edef\@tempb{\detokenize{#2}}
+  \ifx\@tempa\@tempb
+    \let\chr@page@or@range\chaprange
+  \else
+    \let\chr@page@or@range\thepage
+  \fi
+  \addtocontents{#1}{\protect\contentsline{#2}{#3}{\chr@page@or@range}}
+}%
+\newcommand*\chaprange{%
+  \expandafter\pageref{chr@b@\thechapter}--%
+   \expandafter\pageref{chr@e@\thechapter}%
+}
+\let\chr@ltx@addcontentsline\addcontentsline
+\newcommand*\chaprangeon{\let\addcontentsline\chr@addcontentsline}
+\newcommand*\chaprangeoff{\let\addcontentsline\chr@ltx@addcontentsline}
+\newcommand*\breakchaprange{%
+  \chr@label{e}{\thechapter}
+  \chaprangeoff
+  \@chr@chap@enddcfalse
+  \let\chr@label\@gobbletwo
+  \let\breakchaprange\relax
+}
+\endinput
+%%
+%% End of file `chaprange.sty'.
